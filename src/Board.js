@@ -206,14 +206,15 @@
       
       var board = this.rows();
       var columnIndex = minorDiagonalColumnIndexAtFirstRow;
-      var rowIndex = 0 + minorDiagonalColumnIndexAtFirstRow;
+      var rowIndex = 0;
       var hasQueen = false;
       console.log('test' + minorDiagonalColumnIndexAtFirstRow)
       if(minorDiagonalColumnIndexAtFirstRow > board.length){
-        columnIndex = 0 + (minorDiagonalColumnIndexAtFirstRow - board.length); 
+        columnIndex = board.length - 1; 
+        rowIndex = 0 + (minorDiagonalColumnIndexAtFirstRow - board.length)
       }
-      for(var i = columnIndex; i < board.length; i++){
-        if(rowIndex >= 0){
+      for(var i = columnIndex; i >= 0; i--){
+        if(rowIndex < board.length){
           if(board[rowIndex][i] === 1){
             if(hasQueen === true){
               return true;
@@ -222,18 +223,20 @@
             }
           }
         }
-        rowIndex--;
+        rowIndex++;
       }
-      return false; // fixme
+      return false;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       var board = this.rows();
-      for (var i = 0; i < (board.length); i++) {
-        
+      for ( var i = 1 ; i < ((board.length * 2) - 1); i++) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
       }
-      return false; // fixme
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
